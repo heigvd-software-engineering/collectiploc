@@ -105,7 +105,7 @@
                     info.innerHTML = 'The informations you are going to share us (0 may mean unavailable)';
 
                     let pos = 0;
-                    const   headers = ["Longitude", "Latitude", "Altitude", "Accuracy", "AltitudeAccuracy", "Heading", "Speed"],
+                    const headers = ["Longitude", "Latitude", "Altitude", "Accuracy", "AltitudeAccuracy", "Heading", "Speed"],
                         dataValues = [longitude, latitude, altitude, accuracy, altitudeAccuracy, heading, speed];
 
                     // Insert GeoLocation informations in the table
@@ -179,7 +179,7 @@
                 // TODO: POST à la place de GET
                 // GeoLocation properties and ip address recuperation with request to API CollectIpLoc
                 const request = new XMLHttpRequest();
-                request.open('GET', `http://localhost:9000/api/collectiploc?longitude=${longitude}&latitude=${latitude}&altitude=${altitude}&accuracy=${accuracy}&altitudeAccuracy=${altitudeAccuracy}&heading=${heading}&speed=${speed}`, true);
+                request.open('GET', `http://localhost:9000/location?longitude=${longitude}&latitude=${latitude}&altitude=${altitude}&accuracy=${accuracy}&altitudeAccuracy=${altitudeAccuracy}&heading=${heading}&speed=${speed}`, true);
                 request.send();
             });
 
