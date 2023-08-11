@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!-- TODO: en-tête à modifier
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+  in compliance with the License. You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software distributed under the License
+  is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+  or implied. See the License for the specific language governing permissions and limitations under
+  the License.
+  -->
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Baremaps CollectIpLoc</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"/>
+    <style>
+        form {
+            margin-bottom: 1rem;
+        }
+
+        td, th {
+            padding: 1rem;
+            border: 1px solid black;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<!-- A welcome message and explanation of the project -->
+<div style="padding-bottom: 3rem">
+        <span style="display: block; padding-bottom: 1rem; font-size: 2rem">
+            May you help us ?
+        </span>
+    <span>
+            Our goal is to test our API, Baremaps Iploc. For this, we need to compare the results of the localisation by our API and the one your browser knows. If you agree to share us your location, you will be really helpful in our research.
+        </span>
+</div>
+
+<!-- Ask to share the location -->
+<div style="padding-bottom: 1rem" id="askLocation">
+        <span style="display: block; padding-bottom: 0.5rem; font-size: 1.5rem">
+            Don't you mind to share us your location ?
+        </span>
+    <span>
+            Your browser will ask you with a pop-up if you want to block or authorize our website to know your location. If you agree, choose "Authorize" please.
+        </span>
+</div>
+<!-- Button to accept to share the location -->
+<button onclick="getLocation()" style="padding: 0.3rem 0.6rem" id="getButton">
+    <label style="font-size: 1.2rem">
+        Share my location
+    </label>
+</button>
+
+<!-- The table of retrieved GeoLocation informations -->
+<p id="info" style="padding-top: 1rem; text-decoration: underline"></p>
+<table id="properties" style="margin-bottom: 3rem"></table>
+
+<!-- Ask to send the informations -->
+<span style="display: none; padding-bottom: 1rem; font-size: 1.5rem" id="sendRequest">
+        Do you agree to share us these informations ?
+    </span>
+<!-- Button to accept to share the informations after a check of these -->
+<button onclick="sendLocation()" style="display: none; padding: 0.3rem 0.6rem" id="sendButton" disabled>
+    <label style="font-size: 1.2rem">
+        Share my informations
+    </label>
+</button>
+
+<!-- Thanks to the user -->
+<p id="thanks"></p>
+
+<!-- Recuperation of GeoLocation properties (and ip address) -->
+<script>
+    var locationAllowed = false,
+        propertiesTableFilled = false,
+        sendButton = document.getElementById('sendButton'),
+        dataSent = false;
+
+
+    // TODO: Une seule étape, expliquer ce qui va être récolté, après le clic montrer les données collectées
+    function getLocation() {
+        if (navigator.geolocation) {
+            var info = document.getElementById('info'),
+                properties = document.getElementById('properties');
+
+            // GeoLocation properties recuperation, avoiding having some of them with value "null"
+            navigator.geolocation.getCurrentPosition(function (position) {
+                locationAllowed = true;
+                var longitude = position.coords.longitude,
+                    latitude = position.coords.latitude,
+                    altitude = position.coords.altitude ?? 0.0,
+                    accuracy = position.coords.accuracy,
+                    altitudeAccuracy = position.coords.altitudeAccuracy ?? 0.0,
+                    heading = position.coords.heading ?? 0.0,
+                    speed = position.coords.speed ?? 0.0;
+
+                if (!propertiesTableFilled) {
+                    // Table's title
+                    info.innerHTML = 'The informations you are going to share us (0 may mean unavailable)';
+
+                    let pos = 0;
+                    const   headers = ["Longitude", "Latitude", "Altitude", "Accuracy", "AltitudeAccuracy", "Heading", "Speed"],
+                        dataValues = [longitude, latitude, altitude, accuracy, altitudeAccuracy, heading, speed];
+
+                    // Insert GeoLocation informations in the table
+                    if (window.matchMedia("(min-width: 800px)").matches) { // Width screen >= 800px
+                        // Insert header row
+                        const headersRow = properties.insertRow(0);
+                        headers.forEach(header => {
+                            let cell = headersRow.insertCell(pos++);
+                            cell.innerHTML = `<strong>${header}</strong>`;
+                        })
+
+                        // Insert GeoLocation properties values
+                        const dataRow = properties.insertRow(1);
+                        pos = 0;
+                        dataValues.forEach(data => {
+                            let cell = dataRow.insertCell(pos++);
+                            cell.innerHTML = data.toString();
+                        })
+                    } else if (window.matchMedia("(min-width: 320px)").matches) { // Width screen >= 320px
+                        // Insert header column
+                        headers.forEach(header => {
+                            let headersRow = properties.insertRow(pos++);
+                            headersRow.innerHTML = `<th>${header}</th>`;
+                        })
+
+                        // Insert GeoLocation properties values
+                        pos = 0;
+                        dataValues.forEach(data => {
+                            properties.rows[pos++].insertCell().innerHTML = data.toString();
+                        })
+                    } else { // Width screen < 320px
+                        // TODO : format pour Galaxy Fold, peut-être header/data/header/data/... verticalement
+                    }
+
+                    var askLocation = document.getElementById('askLocation'),
+                        getButton = document.getElementById('getButton'),
+                        sendRequest = document.getElementById('sendRequest');
+
+                    // "sendLocation()" button activation
+                    sendRequest.style.display = sendButton.style.display = 'block';
+                    sendButton.disabled = false;
+
+                    // "askLocation()" button deactivation
+                    getButton.disabled = true;
+                    askLocation.style.display = getButton.style.display = 'none';
+                    // Display correction
+                    info.style.paddingTop = '0rem';
+                    info.style.margin = '0rem 0rem 1rem';
+                }
+
+                propertiesTableFilled = true;
+            });
+        } else
+            console.log('Geolocation is not available.');
+    }
+
+    function sendLocation() {
+        if (locationAllowed && !dataSent) {
+            var thanks = document.getElementById('thanks');
+
+            // GeoLocation properties recuperation, avoiding having some of them with value "null"
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var longitude = position.coords.longitude,
+                    latitude = position.coords.latitude,
+                    altitude = position.coords.altitude ?? 0.0,
+                    accuracy = position.coords.accuracy,
+                    altitudeAccuracy = position.coords.altitudeAccuracy ?? 0.0,
+                    heading = position.coords.heading ?? 0.0,
+                    speed = position.coords.speed ?? 0.0;
+
+                // TODO: POST à la place de GET
+                // GeoLocation properties and ip address recuperation with request to API CollectIpLoc
+                const request = new XMLHttpRequest();
+                request.open('GET', `http://localhost:9000/api/collectiploc?longitude=${longitude}&latitude=${latitude}&altitude=${altitude}&accuracy=${accuracy}&altitudeAccuracy=${altitudeAccuracy}&heading=${heading}&speed=${speed}`, true);
+                request.send();
+            });
+
+            sendButton.disabled = dataSent = true;
+            thanks.innerHTML = 'Thank you!';
+        } else
+            console.log('Location sharing is not allowed yet.');
+    }
+</script>
+<style>
+    body {
+        font-family: Arial, serif;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 2rem;
+    }
+
+    button:hover {
+        background-color: #33b249;
+    }
+</style>
+</body>
+</html>
