@@ -1,9 +1,6 @@
 package org.acme;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -22,6 +19,7 @@ public class LocationEntity {
     private double heading;
     private double speed;
     private String ip;
+    @Column(length = 500)
     private String headers;
     private Date createdAt;
     private String macAddress;
@@ -161,7 +159,7 @@ public class LocationEntity {
 
     @Override
     public String toString() {
-        return "UserData{" +
+        return "LocationEntity{" +
                 "id=" + id +
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
