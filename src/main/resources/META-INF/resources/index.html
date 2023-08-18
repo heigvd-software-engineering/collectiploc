@@ -83,12 +83,23 @@
                     heading = position.coords.heading ?? 0.0,
                     speed = position.coords.speed ?? 0.0;
 
-                // TODO: POST à la place de GET
                 // GeoLocation properties and ip address recuperation with request to API CollectIpLoc
                 const request = new XMLHttpRequest();
-                request.open('GET', `http://localhost:8080/location?longitude=${longitude}&latitude=${latitude}&altitude=${altitude}&accuracy=${accuracy}&altitudeAccuracy=${altitudeAccuracy}&heading=${heading}&speed=${speed}`, true);
-                request.send();
+                request.open('POST', `http://localhost:8080/location`, true);
+                request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
+                const params = `longitude=${longitude}&latitude=${latitude}&altitude=${altitude}&accuracy=${accuracy}&altitudeAccuracy=${altitudeAccuracy}&heading=${heading}&speed=${speed}`;
+
+                request.onreadystatechange = function() {
+                    if (request.readyState === XMLHttpRequest.DONE) {
+                        if (request.status === 200)
+                            console.log('POST request successful!');
+                        else
+                            console.log('POST request failed!');
+                    }
+                };
+
+                request.send(params);
                 dataSent = true;
 
                 if (!propertiesTableFilled) {
@@ -99,6 +110,7 @@
                     const headers = ["Longitude", "Latitude", "Altitude", "Accuracy", "AltitudeAccuracy", "Heading", "Speed"],
                         dataValues = [longitude, latitude, altitude, accuracy, altitudeAccuracy, heading, speed];
 
+                    // TODO: peut-être au lieu d'utiliser une table, simplement une div, et utiliser un affichage vertical que ce soit mobile ou Web, plus simple
                     // Insert GeoLocation informations in the table
                     if (window.matchMedia("(min-width: 800px)").matches) { // Width screen >= 800px
                         // Insert header row
