@@ -27,10 +27,14 @@ public class LocationResource {
             @FormParam("accuracy") double accuracy,
             @FormParam("altitudeAccuracy") double altitudeAccuracy,
             @FormParam("heading") double heading,
-            @FormParam("speed") double speed) {
+            @FormParam("speed") double speed,
+            @FormParam("email") String email) {
         var headers = request.headers();
         var address = request.connection().remoteAddress().hostAddress();
-        var userData = new LocationEntity(longitude, latitude, altitude, accuracy, altitudeAccuracy, heading, speed, address, headers.toString(), new java.util.Date(), "macAddress", "acquisitionMode", "cookie");
+        var userData = new LocationEntity(longitude, latitude, altitude, accuracy, altitudeAccuracy, heading, speed, email, address, headers.toString(), new java.util.Date(), "macAddress", "Web", "cookie");
+
+        System.out.println(userData);
+
         em.persist(userData);
         return Response.ok().build();
     }
