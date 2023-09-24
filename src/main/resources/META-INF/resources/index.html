@@ -1,209 +1,233 @@
 <!DOCTYPE html>
-<!-- TODO: en-tête à modifier
-  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
-  in compliance with the License. You may obtain a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software distributed under the License
-  is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
-  or implied. See the License for the specific language governing permissions and limitations under
-  the License.
-  -->
+<!-- CollectIpLoc is an API aimed at measuring the quality of the IpLoc API by collecting many types of data from users who agreed to share them, developed by Yanis Ouadahi, under the supervision of Bertil Chapuis and Dorian Gambin. -->
 <html>
-<head>
-    <meta charset="utf-8"/>
-    <title>Baremaps CollectIpLoc</title>
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"/>
-    <style>
-        form {
-            margin-bottom: 1rem;
-        }
+    <head>
+        <meta charset="utf-8"/>
+        <title>Baremaps CollectIpLoc</title>
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"/>
+        <link rel="stylesheet" href="/pico.min.css">
+        <link rel="stylesheet" href="/index.css">
+    </head>
+    <body>
+        <!-- A welcome message and explanation of the project -->
+        <div class="section">
+            <span class="title">
+                Our Goal
+            </span>
+            <span>
+                Welcome to our Data Collection Campaign! Our mission is to build a comprehensive public dataset aimed at measuring the quality of our IP-to-location services. By gathering accurate information, we hope to contribute to a better understanding of these services.
+            </span>
+        </div>
 
-        td, th {
-            padding: 1rem;
-            border: 1px solid black;
-        }
+        <!-- Presentation of the team -->
+        <div class="section">
+            <span class="title">
+                About Us
+            </span>
+            <span>
+                We are a dedicated team from <a href="https://heig-vd.ch/">HEIG-VD</a>, a leading institution in research and technology. Our team is committed to providing accurate and valuable insights through this data collection initiative. Feel free to learn more about us by visiting our <a href="https://heig-vd.ch/">HEIG-VD page</a>, and don't hesitate to reach out to us via email if you have any questions or feedback:
+            </span>
+            <div class="list">
+                <ul>
+                    <li>Bertil Chapuis: <a href="mailto:bertil.chapuis@heig-vd.ch">bertil.chapuis@heig-vd.ch</a></li>
+                    <li>Dorian Gambin: <a href="mailto:dorian.gambin@heig-vd.ch">dorian.gambin@heig-vd.ch</a></li>
+                    <li>Yanis Ouadahi: <a href="mailto:yanis.ouadahi@heig-vd.ch">yanis.ouadahi@heig-vd.ch</a></li>
+                </ul>
+            </div>
+        </div>
 
-        table {
-            border-collapse: collapse;
-        }
-    </style>
-</head>
-<body>
-<!-- A welcome message and explanation of the project -->
-<div style="padding-bottom: 3rem">
-        <span style="display: block; padding-bottom: 1rem; font-size: 2rem">
-            May you help us ?
+        <!-- Description of what type of data is collected -->
+        <div class="section">
+            <span class="title">
+                Data Collection and Usage
+            </span>
+            <span>
+                We collect specific information to create our dataset, these will be openly available to the public. Users participating in our campaign wanting to contribute to our data collection efforts but who do not want to share their personal data from their home may connect to public networks, such as those found in restaurants or malls.
+
+                Here is a list of the types of data we will collect:
+            </span>
+            <div class="list">
+                <table id="dataTypesTable">
+                    <tr>
+                        <th><span class="dataType">IP Addresses:</span> The IP Addresses are essential for mapping them to physical locations.</th>
+                    </tr>
+                    <tr>
+                        <th><span class="dataType">MAC Addresses:</span> The MAC Addresses of devices will be collected to further enhance the accuracy of mapping IP addresses to physical locations.</th>
+                    </tr>
+                    <tr>
+                        <th><span class="dataType">Geographic Coordinates:</span> Location data in the form of latitude and longitude coordinates. This information is crucial for accurately pinpointing the physical locations associated with the IP addresses.</th>
+                    </tr>
+                    <tr>
+                        <th><span class="dataType">Proxy Usage:</span> We will identify whether a device is using a proxy server. This information can provide insights into the presence of intermediaries between the user's device and the target server.</th>
+                    </tr>
+                    <tr>
+                        <th><span class="dataType">VPN Usage:</span> Detection of Virtual Private Network usage. This helps identify instances where users are masking their true IP addresses.</th>
+                    </tr>
+                    <tr>
+                        <th><span class="dataType">Connection Type:</span> Categorization of the type of network connection used (e.g. Wi-Fi, cellular) to understand the varying data sources.</th>
+                    </tr>
+                    <tr>
+                        <th><span class="dataType">Timestamps:</span> Time and date information, in order to analyze patterns and trends over specific periods.</th>
+                    </tr>
+                    <tr>
+                        <th><span class="dataType">Network Quality Metrics:</span> Data related to network quality, such as latency and connection speed, to assess the performance of IP-to-location services.</th>
+                    </tr>
+                    <tr>
+                        <th><span class="dataType">HTTP Headers:</span> Relevant HTTP headers exchanged between devices and servers. These headers provide valuable insights into the technical aspects of data transmission and service quality.</th>
+                    </tr>
+                    <tr>
+                        <th><span class="dataType">Tracking Cookie:</span> A tracking cookie will be utilized to monitor participants' interactions and activities within our data collection campaign. This helps us better understand user engagement and behaviour.</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Participation to the lottery -->
+        <div class="section">
+            <span class="title">
+                Lottery
+            </span>
+            <span>
+                We are thrilled to introduce an exciting opportunity for to both contribute to our data collection and have a chance to win Amazon gift cards! By becoming a participant, you not only assist us in gathering valuable information but also enter ou exclusive lottery with fantastic prizes on the line.
+            </span>
+            <span id="nextParagraph">
+                To participate in the lottery and be eligible for prizes, we kindly ask for your email address. Rest assured, your email will not be included in the resulting dataset. It will solely be used to notify winners and inform all participants when the dataset is released.
+            </span>
+        </div>
+
+        <span id="acknowledge">
+            By clicking the button below, you acknowledge that the dataset will be publicly accessible and join us in our mission to enhance the understanding of IP-to-location services.
         </span>
-    <span>
-            Our goal is to test our API, Baremaps Iploc. For this, we need to compare the results of the localisation by our API and the one your browser knows. If you agree to share us your location, you will be really helpful in our research.
-        </span>
-</div>
 
-<!-- Ask to share the location -->
-<div style="padding-bottom: 1rem" id="askLocation">
-        <span style="display: block; padding-bottom: 0.5rem; font-size: 1.5rem">
-            Don't you mind to share us your location ?
-        </span>
-    <span>
-            Your browser will ask you with a pop-up if you want to block or authorize our website to know your location. If you agree, choose "Authorize" please.
-        </span>
-</div>
-<!-- Button to accept to share the location -->
-<button onclick="getLocation()" style="padding: 0.3rem 0.6rem" id="getButton">
-    <label style="font-size: 1.2rem">
-        Share my location
-    </label>
-</button>
+        <!-- Button to accept to share the location -->
+        <button onclick="getLocation()" id="getLocation">
+            <label>
+                Share my location
+            </label>
+        </button>
 
-<!-- The table of retrieved GeoLocation informations -->
-<p id="info" style="padding-top: 1rem; text-decoration: underline"></p>
-<table id="properties" style="margin-bottom: 3rem"></table>
+        <!-- Button to participate to the lottery -->
+        <form id="emailForm" style="visibility: hidden">
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+            <button id="submit" type="button" onclick="submitEmail()">Submit</button>
+        </form>
 
-<!-- Ask to send the informations -->
-<span style="display: none; padding-bottom: 1rem; font-size: 1.5rem" id="sendRequest">
-        Do you agree to share us these informations ?
-    </span>
-<!-- Button to accept to share the informations after a check of these -->
-<button onclick="sendLocation()" style="display: none; padding: 0.3rem 0.6rem" id="sendButton" disabled>
-    <label style="font-size: 1.2rem">
-        Share my informations
-    </label>
-</button>
+        <!-- Good luck to the user -->
+        <p id="goodLuck" class="fewWords"></p>
 
-<!-- Thanks to the user -->
-<p id="thanks"></p>
+        <!-- The table of retrieved GeoLocation informations -->
+        <p id="tableTitle"></p>
+        <table id="properties"></table>
 
-<!-- Recuperation of GeoLocation properties (and ip address) -->
-<script>
-    var locationAllowed = false,
-        propertiesTableFilled = false,
-        sendButton = document.getElementById('sendButton'),
-        dataSent = false;
+        <!-- Thanks to the user -->
+        <p id="thanks" class="fewWords"></p>
 
+        <!-- Recuperation of GeoLocation properties -->
+        <script>
+            var propertiesTableFilled = false,
+                dataSent = false;
 
-    // TODO: Une seule étape, expliquer ce qui va être récolté, après le clic montrer les données collectées
-    function getLocation() {
-        if (navigator.geolocation) {
-            var info = document.getElementById('info'),
-                properties = document.getElementById('properties');
+            function getLocation() {
+                if (navigator.geolocation && !dataSent) {
+                    var tableTitle = document.getElementById('tableTitle'),
+                        properties = document.getElementById('properties'),
+                        thanks = document.getElementById('thanks');
 
-            // GeoLocation properties recuperation, avoiding having some of them with value "null"
-            navigator.geolocation.getCurrentPosition(function (position) {
-                locationAllowed = true;
-                var longitude = position.coords.longitude,
-                    latitude = position.coords.latitude,
-                    altitude = position.coords.altitude ?? 0.0,
-                    accuracy = position.coords.accuracy,
-                    altitudeAccuracy = position.coords.altitudeAccuracy ?? 0.0,
-                    heading = position.coords.heading ?? 0.0,
-                    speed = position.coords.speed ?? 0.0;
+                    // GeoLocation properties recuperation, avoiding having some of them with value "null"
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        var longitude = position.coords.longitude,
+                            latitude = position.coords.latitude,
+                            altitude = position.coords.altitude ?? 0.0,
+                            accuracy = position.coords.accuracy,
+                            altitudeAccuracy = position.coords.altitudeAccuracy ?? 0.0,
+                            heading = position.coords.heading ?? 0.0,
+                            speed = position.coords.speed ?? 0.0;
 
-                if (!propertiesTableFilled) {
-                    // Table's title
-                    info.innerHTML = 'The informations you are going to share us (0 may mean unavailable)';
+                        // Sending GeoLocation properties via POST request to CollectIpLoc API
+                        const request = new XMLHttpRequest();
+                        request.open('POST', `http://localhost:8080/location`, true);
+                        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-                    let pos = 0;
-                    const headers = ["Longitude", "Latitude", "Altitude", "Accuracy", "AltitudeAccuracy", "Heading", "Speed"],
-                        dataValues = [longitude, latitude, altitude, accuracy, altitudeAccuracy, heading, speed];
+                        const params = `longitude=${longitude}&latitude=${latitude}&altitude=${altitude}&accuracy=${accuracy}&altitudeAccuracy=${altitudeAccuracy}&heading=${heading}&speed=${speed}`;
 
-                    // Insert GeoLocation informations in the table
-                    if (window.matchMedia("(min-width: 800px)").matches) { // Width screen >= 800px
-                        // Insert header row
-                        const headersRow = properties.insertRow(0);
-                        headers.forEach(header => {
-                            let cell = headersRow.insertCell(pos++);
-                            cell.innerHTML = `<strong>${header}</strong>`;
-                        })
+                        request.onreadystatechange = function () {
+                            if (request.readyState === XMLHttpRequest.DONE) {
+                                if (request.status === 200)
+                                    console.log('POST request successful!');
+                                else
+                                    console.log('POST request failed!');
+                            }
+                        };
 
-                        // Insert GeoLocation properties values
-                        const dataRow = properties.insertRow(1);
-                        pos = 0;
-                        dataValues.forEach(data => {
-                            let cell = dataRow.insertCell(pos++);
-                            cell.innerHTML = data.toString();
-                        })
-                    } else if (window.matchMedia("(min-width: 320px)").matches) { // Width screen >= 320px
-                        // Insert header column
-                        headers.forEach(header => {
-                            let headersRow = properties.insertRow(pos++);
-                            headersRow.innerHTML = `<th>${header}</th>`;
-                        })
+                        request.send(params);
+                        dataSent = true;
 
-                        // Insert GeoLocation properties values
-                        pos = 0;
-                        dataValues.forEach(data => {
-                            properties.rows[pos++].insertCell().innerHTML = data.toString();
-                        })
-                    } else { // Width screen < 320px
-                        // TODO : format pour Galaxy Fold, peut-être header/data/header/data/... verticalement
+                        // Filling the GeoLocation informations table
+                        if (!propertiesTableFilled) {
+                            tableTitle.innerHTML = 'The informations you shared us (0 may mean unavailable)';
+
+                            let pos = 0;
+                            const headers = ["Longitude", "Latitude", "Altitude", "Accuracy", "AltitudeAccuracy", "Heading", "Speed"],
+                                dataValues = [longitude, latitude, altitude, accuracy, altitudeAccuracy, heading, speed];
+
+                            // Insert GeoLocation informations in the table
+                            // Header column
+                            headers.forEach(header => {
+                                let headersRow = properties.insertRow(pos++);
+                                headersRow.innerHTML = `<th>${header}</th>`;
+                            })
+                            // GeoLocation properties values
+                            pos = 0;
+                            dataValues.forEach(data => {
+                                properties.rows[pos++].insertCell().innerHTML = data.toString();
+                            })
+
+                            var getLocation = document.getElementById('getLocation'),
+                                acknowledge = document.getElementById('acknowledge'),
+                                emailForm = document.getElementById('emailForm');
+
+                            // Share button deactivation and email sharing button activation
+                            getLocation.disabled = acknowledge.disabled = true;
+                            getLocation.style.display = acknowledge.style.display = 'none';
+                            emailForm.style.visibility = 'visible';
+
+                            propertiesTableFilled = true;
+                        }
+
+                        thanks.innerHTML = 'Thank you!';
+                    });
+                } else
+                    console.log('Geolocation is not available.');
+            }
+
+            function submitEmail() {
+                var email = document.getElementById('email').value;
+
+                // Sending email via POST request to CollectIpLoc API
+                const request = new XMLHttpRequest();
+                request.open('POST', `http://localhost:8080/location`, true);
+                request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                const param = 'email=' + encodeURI(email);
+
+                request.onreadystatechange = function () {
+                    if (request.readyState === XMLHttpRequest.DONE) {
+                        if (request.status === 200)
+                            console.log('Email submitted successfully!');
+                        else
+                            console.log('Email submission failed!');
                     }
-
-                    var askLocation = document.getElementById('askLocation'),
-                        getButton = document.getElementById('getButton'),
-                        sendRequest = document.getElementById('sendRequest');
-
-                    // "sendLocation()" button activation
-                    sendRequest.style.display = sendButton.style.display = 'block';
-                    sendButton.disabled = false;
-
-                    // "askLocation()" button deactivation
-                    getButton.disabled = true;
-                    askLocation.style.display = getButton.style.display = 'none';
-                    // Display correction
-                    info.style.paddingTop = '0rem';
-                    info.style.margin = '0rem 0rem 1rem';
                 }
 
-                propertiesTableFilled = true;
-            });
-        } else
-            console.log('Geolocation is not available.');
-    }
+                request.send(param);
 
-    function sendLocation() {
-        if (locationAllowed && !dataSent) {
-            var thanks = document.getElementById('thanks');
+                var submit = document.getElementById('submit'),
+                    goodLuck = document.getElementById('goodLuck');
 
-            // GeoLocation properties recuperation, avoiding having some of them with value "null"
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var longitude = position.coords.longitude,
-                    latitude = position.coords.latitude,
-                    altitude = position.coords.altitude ?? 0.0,
-                    accuracy = position.coords.accuracy,
-                    altitudeAccuracy = position.coords.altitudeAccuracy ?? 0.0,
-                    heading = position.coords.heading ?? 0.0,
-                    speed = position.coords.speed ?? 0.0;
-
-                // TODO: POST à la place de GET
-                // GeoLocation properties and ip address recuperation with request to API CollectIpLoc
-                const request = new XMLHttpRequest();
-                request.open('GET', `http://localhost:9000/location?longitude=${longitude}&latitude=${latitude}&altitude=${altitude}&accuracy=${accuracy}&altitudeAccuracy=${altitudeAccuracy}&heading=${heading}&speed=${speed}`, true);
-                request.send();
-            });
-
-            sendButton.disabled = dataSent = true;
-            thanks.innerHTML = 'Thank you!';
-        } else
-            console.log('Location sharing is not allowed yet.');
-    }
-</script>
-<style>
-    body {
-        font-family: Arial, serif;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        margin: 2rem;
-    }
-
-    button:hover {
-        background-color: #33b249;
-    }
-</style>
-</body>
+                submit.style.display = 'none';
+                goodLuck.innerHTML = 'Good luck!';
+            }
+        </script>
+    </body>
 </html>

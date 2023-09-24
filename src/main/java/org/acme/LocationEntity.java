@@ -1,9 +1,6 @@
 package org.acme;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -21,7 +18,9 @@ public class LocationEntity {
     private double altitudeAccuracy;
     private double heading;
     private double speed;
+    private String email;
     private String ip;
+    @Column(length = 500)
     private String headers;
     private Date createdAt;
     private String macAddress;
@@ -31,7 +30,7 @@ public class LocationEntity {
     public LocationEntity() {
     }
 
-    public LocationEntity(double longitude, double latitude, double altitude, double accuracy, double altitudeAccuracy, double heading, double speed, String ip, String headers, Date createdAt, String macAddress, String acquisitionMode, String cookie) {
+    public LocationEntity(double longitude, double latitude, double altitude, double accuracy, double altitudeAccuracy, double heading, double speed, String email, String ip, String headers, Date createdAt, String macAddress, String acquisitionMode, String cookie) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.altitude = altitude;
@@ -39,6 +38,7 @@ public class LocationEntity {
         this.altitudeAccuracy = altitudeAccuracy;
         this.heading = heading;
         this.speed = speed;
+        this.email = email;
         this.ip = ip;
         this.headers = headers;
         this.createdAt = createdAt;
@@ -111,6 +111,10 @@ public class LocationEntity {
         this.speed = speed;
     }
 
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email; }
+
     public String getIp() {
         return ip;
     }
@@ -161,7 +165,7 @@ public class LocationEntity {
 
     @Override
     public String toString() {
-        return "UserData{" +
+        return "LocationEntity{" +
                 "id=" + id +
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
@@ -170,6 +174,7 @@ public class LocationEntity {
                 ", altitudeAccuracy=" + altitudeAccuracy +
                 ", heading=" + heading +
                 ", speed=" + speed +
+                ", email=" + email +
                 ", ip='" + ip + '\'' +
                 ", headers='" + headers + '\'' +
                 ", createdAt=" + createdAt +
